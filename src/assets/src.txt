@@ -1,0 +1,13 @@
+<div class="ControlPanel">
+                        <div class="prev playControl">
+                            <img src="https://static.thenounproject.com/png/172550-200.png" alt="">
+                        </div>
+                        <div class="play playControl" @click="audioStatus">
+                            <img src="https://static.thenounproject.com/png/172549-200.png" v-if="isPlaying" @click="playAudio" alt="">
+                            <img src="https://static.thenounproject.com/png/172551-200.png" v-else @click="pauseAudio" alt="">
+                        </div>
+                        <div class="next playControl">
+                            <img src="https://static.thenounproject.com/png/172554-200.png" alt="">
+                        </div>  
+                        
+                    </div>
