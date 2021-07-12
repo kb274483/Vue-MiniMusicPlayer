@@ -1,5 +1,5 @@
 <script>
-import {onMounted, reactive, ref, watchEffect} from 'vue'
+import {onMounted, reactive, ref, watch, watchEffect} from 'vue'
 import axios from "axios"
 
 export default {
@@ -12,6 +12,13 @@ export default {
         const musicCurrentTime = ref(null);
         const processPercentage = ref(null);
 
+        watch(
+            musicCurrentTime,
+            (curtime)=>{
+                let musicDuration = document.querySelector('#musicPlayer');
+                timeFormat(musicDuration.duration) 
+        })
+        
         watchEffect(
             ()=>{
                 if(musicCurrentTime.value != null){
@@ -36,14 +43,7 @@ export default {
         },1000)
 
         const timeFormat = (time,percent)=>{
-            if(percent === undefined){
-                let min = Math.floor(time/60) % 60 ;
-                let sec = Math.floor(time) % 60 ;
-                if(sec < 10 ){
-                    sec = "0" + sec ;
-                }
-                musicDuration.value = ("0" + min + ":" + sec );
-            }else{
+            if(percent != undefined){
                 let musicPlayer = document.querySelector('#musicPlayer');
                 let min = Math.floor(((time / 100) * percent) / 60 ) % 60 ;
                 let sec = Math.floor( (time / 100) * percent) % 60 ;
@@ -54,6 +54,13 @@ export default {
                 let markTime = ((time / 100) * percent);
                 musicPlayer.currentTime = markTime ;
                 playAndPause();
+            }else{
+                let min = Math.floor(time/60) % 60 ;
+                let sec = Math.floor(time) % 60 ;
+                if(sec < 10 ){
+                    sec = "0" + sec ;
+                }
+                musicDuration.value = ("0" + min + ":" + sec ); 
             }
         }
 
@@ -74,7 +81,6 @@ export default {
         const playAndPause = ()=>{
             playing.value = !playing.value;
             let musicStatus = document.querySelector('#musicPlayer');
-            timeFormat(musicStatus.duration); 
             if(playing.value === true){
                 musicStatus.play();
             }else if(playing.value === false){
@@ -246,7 +252,7 @@ export default {
         
     } 
     .controlPanel{
-        margin-top: 50px;
+        margin-top: 30px;
         display: flex;
         justify-content: space-around;
         .btnFrame{
