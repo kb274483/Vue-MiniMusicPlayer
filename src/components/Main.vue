@@ -125,8 +125,6 @@ export default {
             })
             .catch(function (error) {
                 console.log(error);
-                playing.value = false ;
-            
             });
         })
 
